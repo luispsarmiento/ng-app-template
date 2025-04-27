@@ -1,0 +1,18 @@
+<div class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center p-4">
+  <div class="bg-white w-full max-w-md rounded-lg shadow-lg">
+    <!-- Header -->
+    <header class="px-4">
+      <ng-content select="[dialog-header]"></ng-content>
+    </header>
+
+    <!-- Body -->
+    <div class="p-4">
+      <ng-content select="[dialog-body]"></ng-content>
+    </div>
+
+    <!-- Footer -->
+    <footer class="px-4 py-3 flex justify-end gap-3 border-t">
+      <ng-content select="[dialog-footer]"></ng-content>
+    </footer>
+  </div>
+</div>

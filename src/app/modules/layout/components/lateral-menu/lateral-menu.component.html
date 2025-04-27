@@ -1,0 +1,175 @@
+<div class="flex h-full bg-slate-900">
+  <!-- Sidebar -->
+  <div class="bg-slate-900 text-white w-64 flex-shrink-0 hidden md:block px-2">
+    <!-- Profile information -->
+    <div class="flex items-center justify-center py-4">
+      <img src="https://api.lorem.space/image/face?w=400&h=400" alt="Profile Picture" class="h-12 w-12 rounded-full">
+      <div class="ml-4">
+        <h3 class="text-lg font-semibold">John Doe</h3>
+        <button class="w-full text-sm flex justify-between items-center" type="button"
+          (click)="isOpenUOverlay = !isOpenUOverlay" cdkOverlayOrigin #menuOverlay="cdkOverlayOrigin">
+          johndoe@example.com
+          <fa-icon [icon]="isOpenUOverlay ? faAngleUp : faAngleDown "></fa-icon>
+        </button>
+      </div>
+    </div>
+    <!-- Divider -->
+    <div class="border-t border-slate-700"></div>
+    <!-- Sidebar content here -->
+    <ul class="py-4">
+      <li class="flex items-center px-4 py-2 hover:bg-slate-600/30 cursor-pointer" (click)="navigateTo('app/task/my-day')">
+        <fa-icon class="text-yellow-400 mr-4" [icon]="faSun"></fa-icon><!-- Icon for "My Day" choice -->
+        Mi día
+      </li>
+      <li class="flex items-center px-4 py-2 hover:bg-slate-600/30 cursor-pointer" (click)="test()">
+        <fa-icon class="text-teal-400 mr-4" [icon]="faCalendar"></fa-icon><!-- Icon for "Programado" choice -->
+        Programado
+      </li>
+      <li class="flex items-center px-4 py-2 hover:bg-slate-600/30 cursor-pointer">
+        <fa-icon class="text-red-400 mr-4" [icon]="faCircleExclamation"></fa-icon><!-- Icon for "Importante" choice -->
+        Importante
+      </li>
+      <li class="flex items-center px-4 py-2 hover:bg-slate-600/30 cursor-pointer" (click)="navigateTo('app/task/all')">
+        <fa-icon class="text-green-400 mr-4" [icon]="faSquareCheck"></fa-icon><!-- Icon for "Tasks" choice -->
+        Tareas
+      </li>
+      <!-- Add more menu items as needed -->
+      <!-- Spaces Section -->
+      <div class="border-t border-slate-700 mt-4"></div>
+      <app-space-menu></app-space-menu>
+    </ul>
+  </div>
+
+  <!-- Main content area -->
+  <div class="w-full flex flex-col rounded-2xl p-4 bg-slate-100 h-screen overflow-y-auto">
+    <button type="button"
+      aria-expanded="false"
+      (click)="isOpen = !isOpen"
+      cdkOverlayOrigin
+      #menuOverlay="cdkOverlayOrigin"
+      class="py-2 text-center absolute top-0 left-0 rounded-2xl md:hidden hover:bg-slate-200">
+      <fa-icon class="text-slate-800 p-2" [icon]="faBars"></fa-icon>
+    </button>
+    <div class="h-full">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="menuOverlay"
+  [cdkConnectedOverlayOpen]="isOpen"
+  (overlayOutsideClick)="isOpen = !isOpen"
+  cdkConnectedOverlayHasBackdrop="true"
+>
+<div class="bg-black bg-opacity-50 fixed h-full items-center left-0 top-0 md:hidden">
+  <div class="bg-slate-900 text-white w-64 flex-shrink-0 h-full px-2">
+    <button type="button"
+      type="button"
+      (click)="isOpen = !isOpen"
+      class="py-2 text-center hover:bg-slate-600/30">
+      <fa-icon class="p-2" [icon]="faBars"></fa-icon>
+    </button>
+    <!-- Profile information -->
+    <div class="flex items-center justify-center py-4">
+      <img src="https://api.lorem.space/image/face?w=400&h=400" alt="Profile Picture" class="h-12 w-12 rounded-full">
+      <div class="ml-4">
+        <h3 class="text-lg font-semibold">John Doe</h3>
+        <button class="w-full text-sm flex justify-between items-center" type="button"
+          (click)="isOpenUOverlay = !isOpenUOverlay" cdkOverlayOrigin #menuOverlay="cdkOverlayOrigin">
+          johndoe@example.com
+          <fa-icon [icon]="isOpenUOverlay ? faAngleUp : faAngleDown "></fa-icon>
+        </button>
+      </div>
+    </div>
+    <!-- Divider -->
+    <div class="border-t border-slate-700"></div>
+    <!-- Sidebar content here -->
+    <ul class="py-4">
+      <li class="flex items-center px-4 py-2 hover:bg-slate-600/30 cursor-pointer" (click)="lateralNavigateTo('app/task/my-day')">
+        <fa-icon class="text-yellow-400 mr-4" [icon]="faSun"></fa-icon><!-- Icon for "My Day" choice -->
+        Mi día
+      </li>
+      <li class="flex items-center px-4 py-2 hover:bg-slate-600/30 cursor-pointer">
+        <fa-icon class="text-teal-400 mr-4" [icon]="faCalendar"></fa-icon><!-- Icon for "Programado" choice -->
+        Programado
+      </li>
+      <li class="flex items-center px-4 py-2 hover:bg-slate-600/30 cursor-pointer">
+        <fa-icon class="text-red-400 mr-4" [icon]="faCircleExclamation"></fa-icon><!-- Icon for "Importante" choice -->
+        Importante
+      </li>
+      <li class="flex items-center px-4 py-2 hover:bg-slate-600/30 cursor-pointer" (click)="lateralNavigateTo('app/task/all')">
+        <fa-icon class="text-green-400 mr-4" [icon]="faSquareCheck"></fa-icon><!-- Icon for "Tasks" choice -->
+        Tareas
+      </li>
+      <!-- Add more menu items as needed -->
+      <!-- Spaces Section -->
+      <div class="border-t border-slate-700 mt-4"></div>
+      <app-space-menu (onNavigateToClick)="isOpen = !isOpen"></app-space-menu>
+    </ul>
+  </div>
+</div>
+</ng-template>
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="menuOverlay"
+  [cdkConnectedOverlayOpen]="isOpenUOverlay"
+  (overlayOutsideClick)="isOpenUOverlay = !isOpenUOverlay"
+>
+  <div
+    class="z-50 my-4 w-60 text-base list-none bg-white rounded divide-y divide-gray-100 shadow"
+  >
+    <div class="py-3 px-4 flex justify-between">
+      <span class="block text-sm text-center text-gray-900">Account</span>
+      <button (click)="isOpenUOverlay = !isOpenUOverlay" class="block text-sm text-gray-900">
+        x
+      </button>
+    </div>
+    <!--<div class="py-3 px-4 flex items-center space-x-4">
+      <img
+        class="w-10 h-10 rounded-full"
+        src="https://api.lorem.space/image/face?w=400&h=400"
+        alt=""
+      />
+      <div class="space-y-1">
+        <div>Jese Leos</div>
+        <div class="text-sm text-gray-500">nico@gmail.com</div>
+      </div>
+    </div>-->
+    <!--<ul class="py-1">
+      <li>
+        <a
+          href="#"
+          class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600"
+          >Profile</a
+        >
+      </li>
+      <li>
+        <a
+          href="#"
+          class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600"
+          >Activity</a
+        >
+      </li>
+      <li>
+        <a
+          href="#"
+          class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600"
+          >Cards</a
+        >
+      </li>
+      <li>
+        <a
+          href="#"
+          class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600"
+          >Settings</a
+        >
+      </li>
+    </ul>-->
+    <ul class="py-1">
+      <li>
+        <a href="#" class="block py-2 px-4 text-sm text-gray-700" (click)="logout()">Log out</a>
+      </li>
+    </ul>
+  </div>
+</ng-template>

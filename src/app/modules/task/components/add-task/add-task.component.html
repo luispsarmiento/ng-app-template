@@ -1,0 +1,9 @@
+<div class="w-full">
+  <input #newTaskBox 
+    type="text" 
+    placeholder="Añadir nueva tarea"
+    class="flex-grow text-lg font-medium text-gray-700 px-2 py-1 rounded-lg border-2 border-gray-300 focus:border-blue-500 focus:outline-none w-full"
+    (keyup.enter)="onSubmit(newTaskBox)"
+    (keyup)="validateInput(newTaskBox.value)">
+  <span *ngIf="!isInputValid" class="text-red-400">Solo se permiten hasta 200 caracteres</span>
+</div>

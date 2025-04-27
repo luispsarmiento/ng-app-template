@@ -1,0 +1,109 @@
+<div class="relative w-full h-full flex flex-col">
+    <div class="absolute inset-0 flex flex-col">
+      <!-- Encabezado fijo -->
+      <div class="px-4 py-3 z-10">
+        <h1 class="text-2xl font-bold text-gray-800">{{title}}</h1>
+        <h2 class="text-lg text-gray-600">{{ currentDate }}</h2>
+      </div>
+      
+      <div class="border-t border-slate-250 mt-5 mb-5"></div>
+      
+      <!-- Contenedor principal con desplazamiento -->
+      <div class="flex-grow overflow-y-auto px-4">
+        <div class="mb-6">
+          <div class="flex justify-between items-center mb-4">
+            <p class="text-lg font-semibold">
+              Pregunta {{currentQuestionIndex + 1}} de {{questions.length}}
+            </p>
+            <p class="text-lg font-semibold">
+              Puntuación: {{score}}
+            </p>
+          </div>
+          <h3 class="text-xl mb-4">{{questions[currentQuestionIndex]?.Question_text}}</h3>
+        </div>
+        
+        <div class="space-y-4">
+          <button
+            
+            (click)="handleAnswerSelect('Option_1')"
+            [disabled]="hasAnswered"
+            [class]="'w-full py-3 rounded-md transition duration-300 ' + getOptionClass('Option_1')"
+          >
+            <b>a)</b> {{questions[currentQuestionIndex]?.Option_1}}
+          </button>
+          <button
+            
+            (click)="handleAnswerSelect('Option_2')"
+            [disabled]="hasAnswered"
+            [class]="'w-full py-3 rounded-md transition duration-300 ' + getOptionClass('Option_2')"
+          >
+            <b>b)</b> {{questions[currentQuestionIndex]?.Option_2}}
+          </button>
+          <button
+            
+            (click)="handleAnswerSelect('Option_3')"
+            [disabled]="hasAnswered"
+            [class]="'w-full py-3 rounded-md transition duration-300 ' + getOptionClass('Option_3')"
+          >
+            <b>c)</b> {{questions[currentQuestionIndex]?.Option_3}}
+          </button>
+          <button
+            
+            (click)="handleAnswerSelect('Option_4')"
+            [disabled]="hasAnswered"
+            [class]="'w-full py-3 rounded-md transition duration-300 ' + getOptionClass('Option_4')"
+          >
+            <b>d)</b> {{questions[currentQuestionIndex]?.Option_4}}
+          </button>
+        </div>
+  
+        <!-- Feedback de respuesta -->
+        <div *ngIf="showFeedback" class="mt-4 p-4 rounded-lg"
+             [ngClass]="isCorrectAnswer ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'">
+          <p class="font-medium">
+            {{ isCorrectAnswer ? '¡Correcto!' : '¡Incorrecto!' }}
+          </p>
+          <p>
+            {{ isCorrectAnswer 
+              ? 'Has elegido la respuesta correcta.' 
+              : 'La respuesta correcta es: ' }} <b>{{questions[currentQuestionIndex].Correct_option}}</b>
+          </p>
+        </div>
+      </div>
+  
+      <!-- Pie de página fijo -->
+      <div class="py-3 z-10 px-4">
+        <div class="w-full flex gap-2">
+          <button 
+            (click)="handleSubmit()" 
+            [disabled]="(!selectedAnswer && !hasAnswered) || hasFinished"
+            class="flex-grow text-lg font-medium px-2 py-1 rounded-lg transition"
+            [ngClass]="(!selectedAnswer && !hasAnswered) || hasFinished 
+              ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+              : 'bg-green-500 text-white hover:bg-green-600'"
+          >
+            {{!hasAnswered ? 'Comprobar' : (currentQuestionIndex < questions.length - 1 ? 'Siguiente' : 'Ver Resultados')}}
+          </button>
+          <button 
+            (click)="resetQuiz()"
+            class="px-4 py-1 rounded-lg bg-orange-500 text-white hover:bg-orange-600 transition"
+          >
+            Reintentar
+          </button>
+          <button 
+            (click)="viewResults()"
+            class="px-4 py-1 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition"
+          >
+            Historial
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template [ngIf]="isSidebarOpen">
+    <app-quiz-sidebar
+      (onClose)="isSidebarOpen = !isSidebarOpen" 
+      [isOpen]="isSidebarOpen"
+      [attempts]="attempts"
+    ></app-quiz-sidebar>
+  </ng-template>

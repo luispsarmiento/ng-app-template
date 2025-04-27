@@ -1,0 +1,17 @@
+<div class="relative w-full h-full flex flex-col">
+  <!-- Contenedor del encabezado y pie de página fijos -->
+  <div class="absolute inset-0 flex flex-col">
+    <!-- Encabezado fijo -->
+    <div class="px-4 py-3 z-10 flex justify-between items-center">
+      <ng-content select="[content-layout-header]"></ng-content>
+    </div>
+    <div class="border-t border-slate-250 mt-5 mb-5"></div>
+    <div class="flex-grow overflow-y-auto ">
+      <ng-content select="[content-layout-body]"></ng-content>
+    </div>
+    <!-- Pie de página fijo -->
+    <div class="py-3 z-10">
+      <ng-content select="[content-layout-footer]"></ng-content>
+    </div>
+  </div>
+</div>

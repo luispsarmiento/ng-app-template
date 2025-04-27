@@ -1,0 +1,31 @@
+<div class="flex-grow overflow-y-auto">
+  <ng-container *ngIf="!loading; else loadingTpl">
+    <ng-container *ngIf="tasks.length > 0; else emptyTpl">
+      <div class="space-y-2">
+        <app-task *ngFor="let task of tasks" 
+          [title]="task.name" 
+          [task]="task"
+          [isDone]="task.status === STATUS_COMPLETED ? true : false"
+          (onDelete)="taskDelete.emit(task)"
+          (onDone)="task.status = $event ? STATUS_COMPLETED : STATUS_PENDING; taskStatusChange.emit(task)"
+          (onTaskClick)="taskSelect.emit(task)"
+          (onMoveToSpace)="task.space_id = $event; taskMoveToSpace.emit(task)">
+        </app-task>
+      </div>
+    </ng-container>
+  </ng-container>
+</div>
+
+<!-- Templates -->
+<ng-template #loadingTpl>
+  <div class="flex justify-center items-center h-full">
+    <fa-icon [icon]="faSpinner" [spin]="true" class="text-2xl text-gray-400"></fa-icon>
+  </div>
+</ng-template>
+
+<ng-template #emptyTpl>
+  <div class="flex flex-col items-center justify-center h-full text-gray-400">
+    <fa-icon [icon]="faList" class="text-4xl mb-2"></fa-icon>
+    <p>No tasks yet</p>
+  </div>
+</ng-template>

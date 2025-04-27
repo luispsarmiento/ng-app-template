@@ -1,0 +1,123 @@
+<!--<div class="w-screen h-screen bg-white sm:gray-50 relative">
+  <div class="absolute w-full h-full hidden sm:block">
+    <img class="absolute w-60 lg:w-96 left-0 bottom-0" src="/assets/svg/undraw_chore_list_re_2lq8.svg" alt="bg left">
+    <img class="absolute w-60 ls:w-96 right-0 bottom-0" src="/assets/svg/undraw_checking_boxes_re_9h8m.svg" alt="bg right">
+  </div>
+  <div class="relative w-full sm:w-7/12 md:w-6/12 lg:w-4/12 m-auto">
+    <header class="pt-6 pb-2 flex justify-center">
+      <img class="w-56" src="/assets/images/logo/logo-gradient-blue-trello.png" alt="logo" />
+    </header>
+    <div class="bg-white rounded shadow py-4 px-6">
+      <div class="mb-4">
+        <h1 class="text-center font-semibold pt-4 pb-8">Log In to Daily</h1>
+        <form novalidate class="space-y-4">
+          <div class="relative">
+            <input placeholder="Enter email" type="text" class="w-full rounded bg-gray-100 border-2 border-gray-300">
+          </div>
+          <div class="relative">
+            <input placeholder="Enter password" type="password" class="w-full rounded bg-gray-100 border-2 border-gray-300">
+          </div>
+          <div>-->
+            <!--<button class="text-white w-full px-5 py-2 font-medium round text-sm bg-green-700" type="submit">Log In</button>-->
+            <!--<app-btn [btnType]="'submit'" [color]="'success'">Log In</app-btn>
+          </div>
+        </form>
+      </div>
+      <hr class="my-4 border-b-1 border-r-gray-300" />
+      <div class="flex justify-center items-center space-x-0 space-y-2 md:space-x-2 md:space-y-0 flex-col md:flex-row">
+        <a routerLink="/forgot-password" class="text-blue-600 font-light">Can't log in?</a>
+        <span class="text-gray-500 hidden md:block">•</span>
+        <a routerLink="/register" class="text-blue-600 font-light">Sign up for an account</a>
+      </div>
+    </div>
+    <hr class="mt-10 border-b-1 border-r-gray-300" />
+    <div class="flex justify-center">
+      <img loading="lazy" class="w-32 mt-4" src="/assets/images/logo/horizontal-logo-gradient-neutral-atlassian.png" alt="logo" />
+    </div>
+  </div>
+</div>-->
+
+<div class="w-screen h-screen bg-slate-900 sm:gray-50 relative">
+  
+  <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+    <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+      <img class="mx-auto h-10 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company">
+      <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-slate-100">Sign in to your account</h2>
+    </div>
+  
+    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+      <form class="space-y-6" #login="ngForm" (ngSubmit)="onSubmit(login)" novalidate>
+        <div>
+          <label for="email" class="block text-sm font-medium leading-6 text-slate-100">Email address</label>
+          <div class="mt-2">
+            <input 
+              id="email" 
+              name="email" 
+              type="email"
+              [(ngModel)]="email" 
+              autocomplete="email" 
+              required
+              #_email="ngModel" 
+              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              novalidate>
+              <div *ngIf="_email.invalid && (_email.dirty || _email.touched)" class="alert">
+                <span *ngIf="_email.errors?.['required']" class="text-red-400">Campo requerido</span>
+              </div>
+          </div>
+        </div>
+  
+        <div>
+          <div class="flex items-center justify-between">
+            <label for="password" class="block text-sm font-medium leading-6 text-slate-100">Password</label>
+            <!--<div class="text-sm">
+              <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-500">Forgot password?</a>
+            </div>-->
+          </div>
+          <div class="mt-2">
+            <div class="relative">
+              <input 
+                id="password" 
+                name="password" 
+                [type]="showPassword ? 'text' : 'password'"
+                autocomplete="current-password" 
+                required
+                minlength="8"
+                [(ngModel)]="password"
+                #_password="ngModel" 
+                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pr-10"
+                novalidate>
+              <button
+                *ngIf="password" 
+                type="button"
+                class="absolute top-1/2 right-3 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                (click)="togglePasswordVisibility()">
+                <fa-icon [icon]="showPassword ? faEyeSlash : faEye"></fa-icon>
+              </button>
+            </div>
+            <div *ngIf="_password.invalid && (_password.dirty || _password.touched)" class="alert">
+              <span *ngIf="_password.errors?.['required']" class="text-red-400">Campo requerido</span>
+              <span *ngIf="_password.errors?.['minlength']" class="text-red-400">La clave debe ser de al menos 8 caracteres</span>
+            </div>
+          </div>
+        </div>
+  
+        <div>
+          <button 
+            type="submit" 
+            [disabled]="isBtnDisabled"
+            class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            Sign in</button>
+        </div>
+      </form>
+  
+      <!--<p class="mt-10 text-center text-sm text-slate-500">
+        Not a member?
+        <a href="#" class="font-semibold leading-6 text-slate-600 hover:text-slate-500">Start a 14 day free trial</a>
+      </p>-->
+    </div>
+  </div>
+  <div class="absolute w-full h-30 hidden sm:block">
+    <img class="absolute w-60 lg:w-96 left-0 bottom-0" src="/assets/svg/undraw_chore_list_re_2lq8.svg" alt="bg left">
+    <img class="absolute w-60 ls:w-96 right-0 bottom-0" src="/assets/svg/undraw_checking_boxes_re_9h8m.svg" alt="bg right">
+  </div>
+</div>

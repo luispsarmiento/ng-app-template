@@ -1,0 +1,44 @@
+<div class="relative w-full h-full flex flex-col">
+  <!-- Contenedor del encabezado y pie de página fijos -->
+  <div class="absolute inset-0 flex flex-col">
+    <!-- Encabezado fijo -->
+    <div class="px-4 py-3 z-10 flex justify-between items-center">
+      <div>
+        <h1 class="text-2xl font-bold text-gray-800">{{title}}</h1>
+        <h2 *ngIf="filter == 'MY_DAY'" class="text-lg text-gray-600">{{ currentDate }}</h2>
+      </div>
+      <div *ngIf="filter == 'ALL'">
+        <select [(ngModel)]="taskFilter" (change)="filterTasks()" class="border-2 border-gray-300 rounded-lg px-2 py-1">
+          <option value="all">Todos</option>
+          <option [value]="STATUS_PENDING">Pendientes</option>
+          <option [value]="STATUS_COMPLETED">Completadas</option>
+        </select>
+      </div>
+    </div>
+    <div class="border-t border-slate-250 mt-5 mb-5"></div>
+    <!-- Contenedor principal con desplazamiento -->
+    <div class="flex-grow overflow-y-auto ">
+      
+      <app-task *ngFor="let task of tasks$ | async" [title]="task.name" [task]="task"
+        [isDone]="task.status === STATUS_COMPLETED ? true : false" (onDelete)="deleteTask(task)"
+        (onDone)="task.status = $event ? STATUS_COMPLETED : STATUS_PENDING; updateTaskStatus(task)"
+        (onTaskClick)="selectTask(task)" (onMoveToSpace)="task.space_id = $event; moveTaskToSpace(task)">
+      </app-task>
+    </div>
+
+    <!-- Pie de página fijo -->
+    <div class="py-3 z-10">
+      <div class="w-full">
+        <input #newTaskBox type="text" placeholder="Añadir nueva tarea"
+          class="flex-grow text-lg font-medium text-gray-700 px-2 py-1 rounded-lg border-2 border-gray-300 focus:border-blue-500 focus:outline-none w-full"
+          (keyup.enter)="addTask(newTaskBox)" (keyup)="validateInput(newTaskBox.value)">
+        <span *ngIf="!isInputValid" class="text-red-400">Solo se permiten hasta 200 caracteres</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template [ngIf]="isSidebarOpen">
+  <app-sidebar (onClose)="isSidebarOpen = !isSidebarOpen" [isOpen]="isSidebarOpen" [taskDetail]="taskSelected"
+    (onChangeTaskDetail)="updateTask($event)"></app-sidebar>
+</ng-template>

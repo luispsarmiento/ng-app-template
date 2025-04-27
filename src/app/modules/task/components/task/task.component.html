@@ -1,0 +1,109 @@
+<div class="task-container mx-auto mt-5 w-full">
+  <ng-template [ngIf]="!isDone">
+    <div class="task bg-white shadow-md rounded-lg px-4 py-3 flex items-center border-r-4 border-yellow-400">
+      <button class="edit-button relative p-0 overflow-hidden text-blue-500 hover:text-blue-700 focus:outline-none w-10 h-10" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()" (click)="onDoneClick()">
+        <fa-icon class="absolute inset-0 m-auto text-yellow-400 text-3xl" [icon]="icon"></fa-icon>
+      </button>  
+      <div class="task-details flex-auto ml-4 mr-4">
+        <p (click)="onTaskClick.emit()" class="task-name text-sm md:text-base font-semibold text-gray-700 whitespace-normal break-words overflow-hidden">{{ title }}</p>
+        
+        <div class="flex items-center gap-2 mt-1">
+          <ng-container *ngIf="task.space_id">
+            <div class="flex items-center gap-1 px-2 py-0.5 bg-gray-200 rounded-full text-xs text-gray-600">
+              <fa-icon [icon]="faFolder" class="text-blue-500"></fa-icon>
+              <span>{{ spaceName }}</span>
+            </div>
+          </ng-container>
+          <p class="task-date text-xs text-gray-500">{{ task.createAt | date:'dd/MM/YYYY HH:mm' }}</p>
+        </div>
+      </div>
+      <!-- Timer Section -->
+      <div class="flex items-center gap-2">
+        <button 
+          [ngClass]="{'bg-green-500': task.isTimerRunning, 'bg-gray-300': !task.isTimerRunning}"
+          class="px-3 py-1 rounded-lg text-white flex items-center gap-1"
+          (click)="$event.stopPropagation(); toggleTimer();">
+          <fa-icon [icon]="task.isTimerRunning ? faPause : faPlay"></fa-icon>
+          <span *ngIf="task.startDate && !task.completedDate">
+            {{ elapsedFocustimer }}
+          </span>
+        </button>
+      </div>
+      <button cdkOverlayOrigin #menuTrigger="cdkOverlayOrigin" class="relative p-0 overflow-hidden text-blue-500 hover:text-blue-700 focus:outline-none w-10 h-10" (click)="toggleMenu($event)">
+        <fa-icon class="absolute inset-0 m-auto text-3xl" [icon]="faEllipsisVertical"></fa-icon>
+      </button>
+    </div>
+  </ng-template>
+  
+  <ng-template [ngIf]="isDone">
+    <div class="task bg-white shadow-md rounded-lg px-4 py-3 flex items-center border-r-4 border-green-400">
+      <button class="edit-button relative p-0 overflow-hidden text-blue-500 hover:text-blue-700 focus:outline-none w-10 h-10" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()" (click)="isDone = !isDone; onDone.emit(isDone)" >
+        <fa-icon class="absolute inset-0 m-auto text-green-400 text-3xl" [icon]="faSquareCheck"></fa-icon>
+      </button>  
+      <div class="task-details flex-auto ml-4 mr-4">
+        <p (click)="onTaskClick.emit()" class="task-name text-sm md:text-base font-semibold text-gray-700 line-through opacity-50 whitespace-normal break-words overflow-hidden">{{ title }}</p>
+        <div class="flex items-center gap-2 mt-1">
+          <ng-container *ngIf="task.space_id">
+            <div class="flex items-center gap-1 px-2 py-0.5 bg-gray-200 rounded-full text-xs text-gray-600">
+              <fa-icon [icon]="faFolder" class="text-blue-500"></fa-icon>
+              <span>{{ spaceName }}</span>
+            </div>
+          </ng-container>
+          <p class="task-date text-xs text-gray-500">{{ task.createAt | date:'dd/MM/YYYY HH:mm' }}</p>
+        </div>
+      </div>
+      <div *ngIf="task.focusTimer" class="text-sm text-gray-600">
+        <span class="ml-2">
+          Transcurrido: {{ focusTimer.minutes + '.' + focusTimer.seconds }} min.
+        </span>
+      </div>
+      <button cdkOverlayOrigin #menuTrigger="cdkOverlayOrigin" class="relative p-0 overflow-hidden text-blue-500 hover:text-blue-700 focus:outline-none w-10 h-10" (click)="toggleMenu($event)">
+        <fa-icon class="absolute inset-0 m-auto text-3xl" [icon]="faEllipsisVertical"></fa-icon>
+      </button>
+    </div>
+  </ng-template>
+</div>
+
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="menuTrigger"
+  [cdkConnectedOverlayOpen]="isMenuOpen"
+  (overlayOutsideClick)="toggleMenu($event)">
+  <div class="bg-white rounded-md shadow-lg z-50 py-1 min-w-[160px]">
+    <div>
+      <button  
+        class="w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+        (click)="toggleSpacesMenu($event)">
+        <fa-icon 
+          [icon]="faArrowRight"
+          [class.rotate-90]="isSpacesExpanded">
+        </fa-icon>
+        Mover a
+      </button>
+
+      <!-- Spaces Accordion Content -->
+      <div 
+        class="overflow-hidden transition-all duration-200"
+        [class.h-0]="!isSpacesExpanded"
+        [class.border-t]="isSpacesExpanded">
+        <button *ngFor="let space of spaces"
+          class="w-full pl-8 pr-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2 hover:cursor-pointer"
+          (click)="$event.stopPropagation(); moveToSpace(space._id)"
+          [class.text-blue-600]="space._id === task.space_id"
+          [class.bg-gray-50]="space._id === task.space_id"
+          [disabled]="space._id === task.space_id"
+          [class.hover:cursor-default]="space._id === task.space_id">
+          <fa-icon [icon]="faFolder"></fa-icon>
+          {{ space.name }}
+        </button>
+      </div>
+    </div>
+
+    <button 
+      class="w-full px-4 py-2 text-sm flex items-center gap-2 text-gray-700 hover:text-red-500"
+      (click)="onDelete.emit(); isMenuOpen = false; $event.stopPropagation()">
+      <fa-icon [icon]="faTrash"></fa-icon>
+      Eliminar
+    </button>
+  </div>
+</ng-template>

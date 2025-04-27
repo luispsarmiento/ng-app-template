@@ -1,0 +1,37 @@
+<app-content-layout>
+  <div content-layout-header class="w-full">
+    <h1 class="text-2xl font-bold text-gray-800">{{title}}</h1>
+    <div class="flex items-center gap-2 space-y-2 w-full">
+      <p *ngIf="!isEditing" 
+       (click)="isEditing = true"
+       class="w-full text-lg text-gray-600 cursor-text hover:bg-gray-100 py-1 rounded">
+       {{ spaceDescription || 'Click to add description' }}
+      </p>
+      <input *ngIf="isEditing" 
+       type="text" 
+       [(ngModel)]="spaceDescription"
+       (blur)="saveChanges()"
+       (keyup.enter)="saveChanges()"
+       #descInput
+       class="w-full text-gray-700 py-1 rounded-lg border-none outline-none focus:ring-0 hover:bg-gray-50"
+       autofocus>
+    </div>
+  </div>
+  <div content-layout-body>
+    <app-task-list [tasks]="tasks" 
+      [loading]="tasksLoading"
+      (taskDelete)="deleteTask($event)"
+      (taskStatusChange)="updateTaskStatus($event)"
+      (taskSelect)="selectTask($event)"
+      (taskMoveToSpace)="moveTaskToSpace($event)">
+    </app-task-list>
+  </div>
+  <div content-layout-footer>
+    <app-add-task (addTask)="addTask($event)"></app-add-task>
+  </div>
+</app-content-layout>
+
+<ng-template [ngIf]="isSidebarOpen">
+  <app-sidebar (onClose)="isSidebarOpen = !isSidebarOpen" [isOpen]="isSidebarOpen" [taskDetail]="taskSelected"
+    (onChangeTaskDetail)="updateTask($event)"></app-sidebar>
+</ng-template>

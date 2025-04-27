@@ -1,0 +1,47 @@
+<div class="fixed inset-0 bg-black bg-opacity-50 z-40" (click)="close()"></div>
+<div class="fixed right-0 top-0 h-full w-96 bg-white shadow-lg z-50 p-6">
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-2xl font-bold">Historial de Intentos</h2>
+    <button (click)="close()" class="text-gray-500 hover:text-gray-700">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+  
+  <ul class="space-y-2">
+    <li 
+      *ngFor="let attempt of attempts"
+      class="bg-gray-50 p-3 rounded-md flex justify-between items-center"
+    >
+      <div>
+        <p>{{attempt.date}}</p>
+        <p class="font-bold">
+          {{attempt.score}} / {{attempt.totalQuestions}}
+        </p>
+      </div>
+      <svg *ngIf="attempt.score === attempt.totalQuestions" 
+           xmlns="http://www.w3.org/2000/svg" 
+           class="h-6 w-6 text-green-500" 
+           fill="none" 
+           viewBox="0 0 24 24" 
+           stroke="currentColor">
+        <path stroke-linecap="round" 
+              stroke-linejoin="round" 
+              stroke-width="2" 
+              d="M5 13l4 4L19 7" />
+      </svg>
+      <svg *ngIf="attempt.score !== attempt.totalQuestions" 
+           xmlns="http://www.w3.org/2000/svg" 
+           class="h-6 w-6 text-red-500" 
+           fill="none" 
+           viewBox="0 0 24 24" 
+           stroke="currentColor">
+        <path stroke-linecap="round" 
+              stroke-linejoin="round" 
+              stroke-width="2" 
+              d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </li>
+  </ul>
+</div>

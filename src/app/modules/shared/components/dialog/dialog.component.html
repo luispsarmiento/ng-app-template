@@ -1,0 +1,23 @@
+<app-dialog-base>
+  <div dialog-header class="py-3 flex justify-between items-center border-b">
+    <h2 class="text-lg font-semibold">
+      Nuevo espacio
+    </h2>
+    <button class="text-gray-600 hover:text-gray-900" (click)="close()">
+      <fa-icon class="inset-0 m-auto text-xl" [icon]="faClose"></fa-icon>
+    </button>
+  </div>
+
+  <div dialog-body>
+    <form (submit)="createSpace()">
+      <div class="p-4">
+        <input type="text" id="spaceName" name="spaceName" [(ngModel)]="spaceName" placeholder="Nombre del espacio" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+      </div>
+    </form>
+  </div>
+
+  <div dialog-footer>
+    <button class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50" (click)="close()">Cancelar</button>
+    <button [disabled]="(spaceName == undefined || spaceName == '')" [ngClass]="{'opacity-50 cursor-not-allowed': (spaceName == undefined || spaceName == '')}" class="ml-3 px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-700" (click)="createSpace()">Guardar</button>
+  </div>
+</app-dialog-base>
