@@ -20,7 +20,8 @@ import { ToastService } from 'src/app/services/toast.service';
 @Component({
   selector: 'app-lateral-menu',
   templateUrl: './lateral-menu.component.html',
-  styleUrls: ['./lateral-menu.component.css']
+  styleUrls: ['./lateral-menu.component.css'],
+  standalone: false
 })
 export class LateralMenuComponent implements OnInit {
 

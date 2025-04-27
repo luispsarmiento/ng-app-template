@@ -14,7 +14,8 @@ export interface MtDialogResultData {
 @Component({
   selector: 'app-dialog',
   templateUrl: './dialog.component.html',
-  styleUrls: []
+  styleUrls: [],
+  standalone: false
 })
 export class DialogComponent implements OnInit {
   faClose = faClose;

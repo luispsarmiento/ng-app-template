@@ -17,7 +17,8 @@ import { SpaceService } from 'src/app/services/space.service';
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
-  styleUrls: []
+  styleUrls: [],
+  standalone: false
 })
 export class TaskComponent implements OnInit {
   @ViewChild('menuTrigger') menuTrigger: ElementRef = new ElementRef(null);

@@ -12,9 +12,9 @@ module.exports = {
         primary: colors.blue
       }
     },
-  },
+  }/*,
   plugins: [
     require('@tailwindcss/forms'),
     require('@tailwindcss/typography')
-  ],
+  ],*/
 }

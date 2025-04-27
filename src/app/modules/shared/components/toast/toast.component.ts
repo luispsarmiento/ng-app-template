@@ -5,7 +5,8 @@ import { ToastService } from 'src/app/services/toast.service';
 @Component({
   selector: 'app-toast',
   templateUrl: './toast.component.html',
-  styleUrls: []
+  styleUrls: [],
+  standalone: false
 })
 export class ToastComponent implements OnInit {
 

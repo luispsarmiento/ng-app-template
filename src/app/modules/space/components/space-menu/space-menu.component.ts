@@ -1,5 +1,5 @@
 import { Dialog } from '@angular/cdk/dialog';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { DialogComponent, MtDialogResultData } from 'src/app/modules/shared/components/dialog/dialog.component';
 import {
   faPlus,
@@ -14,9 +14,11 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-space-menu',
   templateUrl: './space-menu.component.html',
-  styleUrls: ['./space-menu.component.css']
+  styleUrls: ['./space-menu.component.css'],
+  standalone: false
 })
 export class SpaceMenuComponent implements OnInit {
+  @ViewChild('faSpinnerC', { static: false }) faSpinnerC: any;
 
   @Output()
   onNavigateToClick = new EventEmitter();
@@ -39,6 +41,7 @@ export class SpaceMenuComponent implements OnInit {
 
   ngOnInit() {
     this.service.loadSpaces();
+    this.faSpinnerC.animation.set('spin');
   }
 
   createNewSpace(){

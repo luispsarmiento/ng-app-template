@@ -4,7 +4,8 @@ import { QuizAttempt } from '../../pages/quiz/quiz.component';
 @Component({
   selector: 'app-quiz-sidebar',
   templateUrl: './quiz-sidebar.component.html',
-  styleUrls: ['./quiz-sidebar.component.css']
+  styleUrls: ['./quiz-sidebar.component.css'],
+  standalone: false
 })
 export class QuizSidebarComponent implements OnInit {
 

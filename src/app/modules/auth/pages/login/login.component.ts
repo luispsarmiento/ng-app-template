@@ -7,7 +7,8 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: []
+  styleUrls: [],
+  standalone: false
 })
 export class LoginComponent implements OnInit {
 
@@ -31,19 +32,21 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit($evt: any){
-    this.loaderService.show();
     this.isBtnDisabled = true;
-    this.authService.login($evt.value.email, $evt.value.password).subscribe({
-      next: (resp: any) => {
-        this.loaderService.close();
-        this.router.navigate(['/app']);
-      },
-      error: (err: any) => {
-        this.loaderService.close();
-        this.isBtnDisabled = false;
-        console.error(err)
-      }
-    })
+    this.router.navigate(['/app']);
+    // this.loaderService.show();
+    // this.isBtnDisabled = true;
+    // this.authService.login($evt.value.email, $evt.value.password).subscribe({
+    //   next: (resp: any) => {
+    //     this.loaderService.close();
+    //     this.router.navigate(['/app']);
+    //   },
+    //   error: (err: any) => {
+    //     this.loaderService.close();
+    //     this.isBtnDisabled = false;
+    //     console.error(err)
+    //   }
+    // })
   }
 
   togglePasswordVisibility() {

@@ -13,7 +13,8 @@ export type TaskOverviewFilter = 'MY_DAY' | 'ALL'
   selector: 'app-task-overview',
   templateUrl: './task-overview.component.html',
   styleUrls: [],
-  providers: [DatePipe]
+  providers: [DatePipe],
+  standalone: false
 })
 export class TaskOverviewComponent implements OnInit, OnDestroy {
 

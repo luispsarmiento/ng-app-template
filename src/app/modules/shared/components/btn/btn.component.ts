@@ -9,7 +9,8 @@ class BtnColor{
 @Component({
   selector: 'app-btn',
   templateUrl: './btn.component.html',
-  styleUrls: []
+  styleUrls: [],
+  standalone: false
 })
 export class BtnComponent implements OnInit {
 

@@ -9,6 +9,7 @@ import jsonDoc from './doc';
   templateUrl: './editor.component.html',
   styleUrls: ['./editor.component.css'],
   encapsulation: ViewEncapsulation.None,
+  standalone: false
 })
 export class EditorComponent implements OnInit, OnDestroy{
   

@@ -30,7 +30,8 @@ export interface QuizAttempt {
 @Component({
   selector: 'app-quiz',
   templateUrl: './quiz.component.html',
-  styleUrls: ['./quiz.component.css']
+  styleUrls: ['./quiz.component.css'],
+  standalone: false
 })
 export class QuizComponent implements OnInit, AfterViewInit {
 

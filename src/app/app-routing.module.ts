@@ -6,12 +6,12 @@ import { RedirectGuard } from './guards/redirect.guard';
 const routes: Routes = [
   {
     path: '',
-    canActivate: [ RedirectGuard ],
+    //canActivate: [ RedirectGuard ],
     loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule),
   },
   {
     path: 'app',
-    canActivate: [AuthGuard],
+    //canActivate: [AuthGuard],
     loadChildren: () => import('./modules/layout/layout.module').then(m => m.LayoutModule)
   }
 ];

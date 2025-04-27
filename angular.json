@@ -76,12 +76,15 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "buildTarget": "mt-todo-app:build"
+          },
           "configurations": {
             "production": {
-              "browserTarget": "mt-todo-app:build:production"
+              "buildTarget": "mt-todo-app:build:production"
             },
             "development": {
-              "browserTarget": "mt-todo-app:build:development"
+              "buildTarget": "mt-todo-app:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -89,7 +92,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "mt-todo-app:build"
+            "buildTarget": "mt-todo-app:build"
           }
         },
         "test": {
